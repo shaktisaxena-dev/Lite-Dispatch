@@ -7,11 +7,11 @@ We followed a **Layered Architecture** (Separation of Concerns).
 
 ```mermaid
 graph TD
-    Client[Client / Client] -->|HTTP Request| API[API Layer (main.py)]
-    API -->|Pydantic Models| Service[Service Layer (service.py)]
-    Service -->|SQLAlchemy Models| Data[Data Layer (models.py)]
-    Service -.->|Events| Plugins[Plugin System]
-    Data -->|SQL| DB[(PostgreSQL)]
+    Client["Client / Client"] -->|HTTP Request| API["API Layer (main.py)"]
+    API -->|Pydantic Models| Service["Service Layer (service.py)"]
+    Service -->|SQLAlchemy Models| Data["Data Layer (models.py)"]
+    Service -.->|Events| Plugins["Plugin System"]
+    Data -->|SQL| DB[("PostgreSQL")]
 ```
 
 ### Key Components
@@ -28,6 +28,8 @@ We implemented two primary entities: `User` and `Incident`.
 
 ```mermaid
 erDiagram
+    USERS ||--o{ INCIDENTS : creates
+
     USERS {
         int id PK
         string email
@@ -37,7 +39,7 @@ erDiagram
     INCIDENTS {
         int id PK
         string title
-        text description
+        string description
         string status
         string priority
         datetime created_at
